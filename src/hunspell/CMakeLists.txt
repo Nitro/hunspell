@@ -82,32 +82,34 @@ add_install_target(${HUNSPELL_LIB_TARGET_OBJ})
 
 # ---------------------------------------------------------------------------- #
 # ~~~ Shared library target
-add_library(${HUNSPELL_LIB_TARGET_SHARED} SHARED)
+if (HUNSPELL_BUILD_SHARED_LIB)
+    add_library(${HUNSPELL_LIB_TARGET_SHARED} SHARED)
 
-target_link_libraries(${HUNSPELL_LIB_TARGET_SHARED}
-    PRIVATE
-        ${HUNSPELL_LIB_TARGET_OBJ}
-        # Cmake passes linker flags through compiler
-        $<$<CXX_COMPILER_ID:GNU>:-Wl,--no-undefined>
-        #   $<$<CXX_COMPILER_ID:Clang>:-Wl,-no-undefined,error>
-)
-target_include_directories(${HUNSPELL_LIB_TARGET_SHARED}
-    INTERFACE  ${HUNSPELL_LIB_INCLUDE_DIRECTORIES}
-)
+    target_link_libraries(${HUNSPELL_LIB_TARGET_SHARED}
+        PRIVATE
+            ${HUNSPELL_LIB_TARGET_OBJ}
+            # Cmake passes linker flags through compiler
+            $<$<CXX_COMPILER_ID:GNU>:-Wl,--no-undefined>
+            #   $<$<CXX_COMPILER_ID:Clang>:-Wl,-no-undefined,error>
+    )
+    target_include_directories(${HUNSPELL_LIB_TARGET_SHARED}
+        INTERFACE  ${HUNSPELL_LIB_INCLUDE_DIRECTORIES}
+    )
 
-# Properties
-set_target_properties(${HUNSPELL_LIB_TARGET_SHARED} PROPERTIES
-    OUTPUT_NAME  ${HUNSPELL_LIB_OUTPUT_NAME}
-    VERSION      0.0.${PROJECT_VERSION_PATCH}  # ${PROJECT_VERSION}
-    SOVERSION    ${PROJECT_VERSION_MAJOR}
-    FOLDER       ${HUNSPELL_LIB_TARGET_PREFIX}
-)
+    # Properties
+    set_target_properties(${HUNSPELL_LIB_TARGET_SHARED} PROPERTIES
+        OUTPUT_NAME  ${HUNSPELL_LIB_OUTPUT_NAME}
+        VERSION      0.0.${PROJECT_VERSION_PATCH}  # ${PROJECT_VERSION}
+        SOVERSION    ${PROJECT_VERSION_MAJOR}
+        FOLDER       ${HUNSPELL_LIB_TARGET_PREFIX}
+    )
 
-# Create alias
-add_library(${HUNSPELL_NAMESPACE}${HUNSPELL_LIB_TARGET_SHARED} ALIAS ${HUNSPELL_LIB_TARGET_SHARED})
+    # Create alias
+    add_library(${HUNSPELL_NAMESPACE}${HUNSPELL_LIB_TARGET_SHARED} ALIAS ${HUNSPELL_LIB_TARGET_SHARED})
 
-# Add install target
-add_install_target(${HUNSPELL_LIB_TARGET_SHARED})
+    # Add install target
+    add_install_target(${HUNSPELL_LIB_TARGET_SHARED})
+endif()
 # ---------------------------------------------------------------------------- #
 
 

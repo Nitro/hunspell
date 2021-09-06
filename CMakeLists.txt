@@ -3,8 +3,9 @@ cmake_minimum_required(VERSION 3.13)
 project(hunspell LANGUAGES C CXX VERSION 1.7.2)
 
 # ~~~ Options
-option(HUNSPELL_BUILD_TOOLS       "Build Hunspell tools and parser."  ON)
+option(HUNSPELL_BUILD_TOOLS       "Build Hunspell tools and parser."  OFF)
 option(HUNSPELL_BUILD_STATIC_LIB  "Build static hunspell library."    ON)
+option(HUNSPELL_BUILD_SHARED_LIB  "Build shared hunspell library."    OFF)
 # ---------------------------------------------------------------------------- #
 
 
